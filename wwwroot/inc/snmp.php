@@ -564,6 +564,25 @@ $iftable_processors['nexus-any-10000SFP+'] = array
 	'try_next_proc' => FALSE,
 );
 
+$iftable_processors['nexus-3048-1000TX'] = array
+(
+        'pattern' => '@^Ethernet([[:digit:]]/[[:digit:]]+)$@',
+        'replacement' => 'e\\1',
+        'dict_key' => '24', // From database - check wwwroot/inc/install.php
+        'label' => '\\1',
+        'try_next_proc' => FALSE,
+);
+
+$iftable_processors['nexus-3048-49-to-52-1000SFP'] = array
+(
+        'pattern' => '@^Ethernet([[:digit:]]+/)?(49|50|51|52)$@',
+        'replacement' => 'e\\1\\2',
+        'dict_key' => '9-1084',
+        'label' => '\\1\\2',
+        'try_next_proc' => FALSE,
+);
+
+
 $iftable_processors['cisco-router-chassis-any-100TX'] = array
 (
 	'pattern' => '@^FastEthernet([[:digit:]]+/)?([[:digit:]]+)$@',
@@ -2653,6 +2672,13 @@ $known_devices = array // key is system OID w/o "enterprises" prefix
 		'text' => 'N5K-C5548P: 32 SFP+/10000',
 		'processors' => array ('nexus-any-10000SFP+', 'nexus-mgmt'),
 	),
+        '9.12.3.1.3.1106' => array
+        (
+                'dict_key' => 2333,
+                'text' => 'N3K-3048P: 48 RJ-45/100-1000TX + 4 SFP+/1000-10000',
+                'processors' => array ('nexus-3048-49-to-52-1000SFP', 'nexus-3048-1000TX', 'nexus-mgmt'),
+        ),
+
 	'11.2.3.7.11.9' => array
 	(
 		'dict_key' => 1086,
